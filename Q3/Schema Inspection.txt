@@ -1,0 +1,18 @@
+// Option 1: Visual schema inspection
+CALL db.schema.visualization()
+
+// Option 2: Textual schema inspection
+CALL db.labels()    // Show all node labels
+CALL db.relationshipTypes() // Show all relationship types
+CALL db.propertyKeys()    // Show all property keys
+
+// Option 3: Programmatic inspection
+// List all node types and a sample of each
+MATCH (n)
+RETURN DISTINCT labels(n) AS NodeType, keys(n) AS Properties
+LIMIT 100
+
+// List all relationship types and their properties
+MATCH ()-[r]->()
+RETURN DISTINCT type(r) AS RelType, keys(r) AS Properties
+LIMIT 100

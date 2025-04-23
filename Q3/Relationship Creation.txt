@@ -1,0 +1,19 @@
+// 6. Create Follows Relationships Among Users
+// Creates FOLLOWS relationships between users with 20% probability
+MATCH (u1:User), (u2:User)
+WHERE u1.id <> u2.id AND rand() < 0.2
+MERGE (u1)-[:FOLLOWS]->(u2)
+
+// 7. Create Purchases (BOUGHT relationships)
+// Creates BOUGHT relationships between users and products with 5% probability
+MATCH (u:User), (p:Product)
+WHERE rand() < 0.05
+MERGE (u)-[:BOUGHT]->(p)
+
+// 8. Create Reviews (REVIEWED relationships with properties)
+// Creates REVIEWED relationships with random ratings and comments (5% probability)
+MATCH (u:User), (p:Product)
+WHERE rand() < 0.05
+MERGE (u)-[r:REVIEWED]->(p)
+SET r.rating = toInteger(rand() * 5 + 1),
+    r.comment = "Review for " + p.name

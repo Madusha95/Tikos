@@ -1,0 +1,27 @@
+// 1. Create Users (e.g., 10 users)
+// Creates 10 User nodes with IDs U1-U10 and names User_1-User_10
+UNWIND range(1, 10) AS i
+CREATE (:User {id: "U" + toString(i), name: "User_" + toString(i)})
+
+// 2. Create Products (e.g., 100 products)
+// Creates 100 Product nodes with IDs P1-P100, names Product_1-Product_100, and random prices
+UNWIND range(1, 100) AS i
+CREATE (:Product {id: "P" + toString(i), name: "Product_" + toString(i), price: round(rand() * 50)})
+
+// 3. Create Categories (e.g., 5 categories)
+// Creates 5 Category nodes for predefined categories
+UNWIND ["Electronics", "Clothing", "Books", "Fitness", "Home"] AS category
+CREATE (:Category {id: category, name: category})
+
+// 4. Create Brands (e.g., 5 brands)
+// Creates 5 Brand nodes for predefined brands
+UNWIND ["BrandA", "BrandB", "BrandC", "BrandD", "BrandE"] AS brand
+CREATE (:Brand {id: brand, name: brand})
+
+// 5. Connect Products to Brands & Categories
+// Randomly associates products with categories and brands (10% probability)
+MATCH (p:Product), (c:Category), (b:Brand)
+WITH p, c, b
+WHERE rand() < 0.1 // Assign some products to random categories/brands
+MERGE (p)-[:BELONGS_TO]->(c)
+MERGE (p)-[:MADE_BY]->(b)

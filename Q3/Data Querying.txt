@@ -1,0 +1,28 @@
+// 1. View All Products
+MATCH (p:Product)
+RETURN p
+LIMIT 100
+
+// Alternative: Return specific product properties
+MATCH (p:Product)
+RETURN p.id, p.name, p.price
+LIMIT 100
+
+// 2. View All Users
+MATCH (u:User)
+RETURN u
+LIMIT 100
+
+// 3. View Products BOUGHT by Users
+MATCH (u:User)-[:BOUGHT]->(p:Product)
+RETURN u.name AS User, p.name AS Product
+LIMIT 50
+
+// 5. View Product Categories and Brands
+MATCH (p:Product)-[:BELONGS_TO]->(c:Category)
+RETURN p.name AS Product, c.name AS Category
+LIMIT 50
+
+MATCH (p:Product)-[:MADE_BY]->(b:Brand)
+RETURN p.name AS Product, b.name AS Brand
+LIMIT 50

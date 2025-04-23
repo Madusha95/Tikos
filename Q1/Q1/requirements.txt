@@ -1,8 +1,0 @@
-fastapi
-typing
-pydantic
-motor
-datetime
-uvicorn
-httpx
-pymongo
